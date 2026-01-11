@@ -1,11 +1,12 @@
 import streamlit as st
 import fitz
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from docx import Document
 import io
 
 # Konfiguracja
-genai.configure(api_key=st.secrets["GEMINI_KEY"])
+client = genai.Client(api_key=st.secrets["GEMINI_KEY"])
 
 st.title("📚 Generator Notatek")
 
@@ -30,9 +31,11 @@ if pdf and st.button("🚀 Generuj Notatki"):
             "Rozszerzenie": "Dodaj wyjaśnienia trudnych pojęć, usuń nieistotne:"
         }
         
-        # Gemini
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(prompty[tryb] + "\n\n" + tekst)
+        # Gemini - NOWA BIBLIOTEKA
+        response = client.models.generate_content(
+            model='gemini-2.0-flash-exp',
+            contents=prompty[tryb] + "\n\n" + tekst
+        )
         notatki = response.text
         
         # Pokaż
