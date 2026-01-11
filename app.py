@@ -1,5 +1,5 @@
 import streamlit as st
-import fitz  # PyMuPDF
+import fitz
 import google.generativeai as genai
 from docx import Document
 import io
@@ -40,12 +40,12 @@ if pdf and st.button("🚀 Generuj Notatki"):
         st.markdown(notatki)
         
         # Word do pobrania
-        doc = Document()
-        doc.add_heading('Notatki', 0)
-        doc.add_paragraph(notatki)
+        doc_word = Document()
+        doc_word.add_heading('Notatki', 0)
+        doc_word.add_paragraph(notatki)
         
         bio = io.BytesIO()
-        doc.save(bio)
+        doc_word.save(bio)
         
         st.download_button(
             "📥 Pobierz Word",
@@ -53,11 +53,3 @@ if pdf and st.button("🚀 Generuj Notatki"):
             "notatki.docx",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
-```
-
-**Plik 2: `requirements.txt`**
-```
-streamlit
-PyMuPDF
-google-generativeai
-python-docx
