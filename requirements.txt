@@ -1,4 +1,4 @@
 streamlit
 PyMuPDF
-google-genai
+openai
 python-docx
